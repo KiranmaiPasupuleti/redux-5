@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createStore,applyMiddleware} from 'redux'
+import reducer from './store/reducer'
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk'
+
+// const logAction = (store) => {
+//   return next => {
+//     return action => {
+//       const result = next(action)
+//       console.log(`Logging action before reach to reducer ${JSON.stringify(result)}`)
+//       return result
+//     }
+//   }
+// }
+
+const store = createStore(reducer,applyMiddleware(thunk))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </React.StrictMode>
 );
 
